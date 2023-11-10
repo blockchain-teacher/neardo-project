@@ -3,11 +3,13 @@
 # 선행조건
 - 깨끗한 docker 환경
 ```
+# 현재 수행 상황 확인
 docker ps -a
 docker network ls
 docker volume ls
 docker images dev-*
 
+# 초기화 명령들
 docker rm -f $(docker ps -aq)
 docker rmi -f $(docker images dev-* -q)
 docker network prune
