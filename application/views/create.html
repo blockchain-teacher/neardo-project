@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearDO Prototype</title>
+    <!-- 부트스트랩 라이브러리 추가 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- jquery 라이브러리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="container" style="width:80%">
+
+            <br>
+            <h1>산란정보입력</h1>
+            <p>산란정보 입력을 위한 인증서정보 ID, 어미닭ID, 달갈ID, 산란일, 개수, 소유주를 입력하세요.</p>
+            <br>
+            <!-- 입력폼 certificate, id, color, size, owner, value -->
+            <label for="cert" class="form-label">Certificate Name : </label>
+            <input type="text" class="form-control" id="cert" style="width:80%">
+            <br>
+            <label for="cid" class="form-label">Parent Chicken ID : </label>
+            <input type="text" class="form-control" id="cid" style="width:80%">
+            <br>
+            <label for="eid" class="form-label">Egg ID : </label>
+            <input type="text" class="form-control" id="eid" value="" style="width:80%">
+            <br>
+            <label for="sdate" class="form-label">Spawn date : </label>
+            <input type="text" class="form-control" id="sdate" value="" style="width:80%">
+            <br>
+            <label for="count" class="form-label">Count : </label>
+            <input type="text" class="form-control" id="count" value="" style="width:80%">
+            <br>
+            <label for="owner" class="form-label">Owner : </label>
+            <input type="text" class="form-control" id="owner" value="" style="width:80%">
+            <br>
+
+
+            <!-- 버튼 -->
+            <button class="btn btn-outline-success" id="gen-btn">산란정보생성</button>&nbsp;&nbsp;
+            <a href="/" class="btn btn-outline-secondary">홈으로</a>
+            <br><br>
+            <!-- 결과영역 -->
+            <div class="container" id="result"></div>
+        </div>
+
+
+        <br><br>
+    </div>
+
+</body>
+
+<script>
+    // 버튼 클릭 후 AJAX 동작 ( /user, POST, {userid, userrole, userdepartment} )
+    $("#gen-btn").click(() => {
+        const cert = $("#cert").val();
+        const cid = $("#cid").val();
+        const eid = $("#eid").val();
+        const sdate = $("#sdate").val();
+        const owner = $("#owner").val();
+        const count = $("#count").val();
+
+        console.log("egg create gen-btn clicked ", cert, cid, eid, sdate, owner, count);
+
+        $.post('/egg', { cert, cid, eid, sdate, owner, count }, (data, status) => {
+            console.log(status, data);
+
+            $("#result").empty();
+            const res = JSON.stringify(data);
+            if (data.result == 'success') {
+                $("#result").append("RESULT : " + data.result + "<br>");
+                $("#result").append("MESSAGE : " + data.msg + "<br>");
+            } else {
+                $("#result").append("RESULT : " + data.result + "<br>");
+                $("#result").append("ERROR : " + JSON.stringify(data.error) + "<br>");
+            }
+
+
+
+        })
+    })
+</script>
+
+</html>

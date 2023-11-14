@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearDO Prototype</title>
+    <!-- 부트스트랩 라이브러리 추가 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- jquery 라이브러리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="container" style="width:80%">
+            <br>
+            <h1>산란정보조회</h1>
+            <p>산란정보조회를 위한 인증서정보, egg ID를 입력하세요.</p>
+            <br>
+            <!-- 입력폼 -->
+            <label for="cert" class="form-label">Certificate Name : </label>
+            <input type="text" class="form-control" id="cert" style="width:80%">
+            <br>
+            <label for="eid" class="form-label">Egg ID : </label>
+            <input type="text" class="form-control" id="eid" style="width:80%">
+            <br>
+
+            <!-- 버튼 -->
+            <button class="btn btn-outline-success" id="read-btn">산란정보조회</button>&nbsp;&nbsp;
+            <!-- <a href="#" class="btn btn-outline-success">자산이력조회</a>&nbsp;&nbsp; -->
+            <button class="btn btn-outline-success" id="hist-btn">산란정보이력조회</button>&nbsp;&nbsp;
+            <a href="/" class="btn btn-outline-secondary">홈으로</a>
+            <br><br>
+        </div>
+        <!-- 결과영역 -->
+        <div class="container" style="width:80%">
+            <!-- id, color, size, owner, value -->
+            <p id="result"></p><br>
+            <table id="result_table" class="table table-hover">
+                <thead id="result_table_head">
+                </thead>
+                <tbody id="result_table_body">
+                </tbody>
+            </table>
+        </div>
+
+        <br><br>
+    </div>
+
+</body>
+
+<script>
+    // 버튼 클릭 후 AJAX 동작 ( /user, POST, {userid, userrole, userdepartment} )
+    $("#read-btn").click(() => {
+        const eid = $("#eid").val();
+        const cert = $("#cert").val();
+        console.log("egg read read-btn clicked ", cert, eid);
+
+        $.get('/egg', { cert, eid }, (data, status) => {
+            console.log(status, data);
+
+            $("#result").empty();
+            const res = JSON.stringify(data);
+            //$("#result").append(res);
+            // table 채우기
+            if (data.result == 'success') {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+
+                $("#result_table_head").append("<tr ><th>Key</th><th>Record</th></tr>");
+                $("#result_table_body").append("<tr><td>ChickenID:</td><td>" + data.msg.cid + "</td></tr>");
+                $("#result_table_body").append("<tr><td>EggID:</td><td>" + data.msg.eid + "</td></tr>");
+                $("#result_table_body").append("<tr><td>SpawnDate:</td><td>" + data.msg.spawndate + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Count:</td><td>" + data.msg.count + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Shipment Infomation:</td><td>" + data.msg.shipinfo + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Owner:</td><td>" + data.msg.owner + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Status:</td><td>" + data.msg.status + "</td></tr>");
+            } else {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+                $("#result").append("RESULT: failed<br>");
+                $("#result").append("ERROR: "+ JSON.stringify(data.error)+"<br>");
+
+            }
+        })
+    })
+    $("#hist-btn").click(() => {
+        const eid = $("#eid").val();
+        const cert = $("#cert").val();
+        console.log("egg history hist-btn clicked ", cert, eid);
+
+        $.get('/egg/history', { cert, eid }, (data, status) => {
+            console.log(status, data);
+
+            $("#result").empty();
+            const res = JSON.stringify(data);
+            //$("#result").append(res);
+            //테이블 채우기
+            if (data.result == 'success') {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+
+
+                $("#result_table_head").append("<tr ><th>tag</th><th>Data</th></tr>");
+                
+                for (i = 0; i < data.msg.length; i++) {
+                    $("#result_table_body").append("<tr><td>TxID:</td><td>" + data.msg[i].txId + "</td></tr>");
+                    $("#result_table_body").append("<tr><td>Timestamp:</td><td>" + data.msg[i].timestamp + "</td></tr>");
+                    $("#result_table_body").append("<tr><td>isDelete:</td><td>" + data.msg[i].isDelete + "</td></tr>");
+
+                    var record = "ChickenID: " + data.msg[i].record.cid + "<br>" + "EggID: " + data.msg[i].record.eid + "<br>" + "SpawnDate: " + data.msg[i].record.spawndate + "<br>" + "Count: " + data.msg[i].record.count + "<br>" + "Shipment Infomation: " + data.msg[i].record.shipinfo + "<br>" + "Owner: " + data.msg[i].record.owner + "<br>" + "Status: " + data.msg[i].record.status + "<br>"
+
+                    $("#result_table_body").append("<tr><td>Record:</td><td>" + record + "</td></tr>");
+                }
+            } else {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+                $("#result").append("RESULT: failed<br>");
+                $("#result").append("ERROR: "+ JSON.stringify(data.error)+"<br>");
+
+            }
+        })
+    })
+</script>
+
+</html>

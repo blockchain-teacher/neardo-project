@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Prototype</title>
+    <!-- 부트스트랩 라이브러리 추가 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- jquery 라이브러리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="container" style="width:80%">
+
+            <br>
+            <h1>관리자 인증서 발급</h1>
+            <p>관리자 인증을 위한 ID와 Password를 입력하세요.</p>
+            <br>
+            <!-- 입력폼 -->
+            <label for="adminid" class="form-label">ADMIN ID : </label>
+            <input type="text" class="form-control" id="adminid" style="width:50%;">
+            <br>
+            <label for="adminpw" class="form-label">PASSWORD : </label>
+            <input type="password" class="form-control" id="adminpw" style="width:50%;">
+            <br>
+
+            <!-- 버튼 -->
+            <button class="btn btn-outline-danger" id="admin-btn">관리자 인증서 생성</button> &nbsp;&nbsp;
+            <a href="/" class="btn btn-outline-secondary">홈으로</a>
+            <br><br>
+            <!-- 결과영역 -->
+            <div class="container" id="admin-result"></div>
+
+            <br><br>
+        </div>
+
+        <div class="container" style="width:80%">
+
+            <br>
+            <h1>사용자 인증서 발급</h1>
+            <p>사용자 인증을 위한 ID, Role, Department를 입력하세요.</p>
+            <br>
+            <!-- 입력폼 -->
+            <label for="userid" class="form-label">User ID : </label>
+            <input type="text" class="form-control" id="userid" style="width:50%;">
+            <br>
+            <label for="userrole" class="form-label">Role : </label>
+            <input type="text" class="form-control" id="userrole" value="client" style="width:50%;">
+            <br>
+            <label for="userdepartment" class="form-label">Department : </label>
+            <input type="text" class="form-control" id="userdepartment" value="org1.department1" style="width:50%;">
+            <br>
+
+            <!-- 버튼 -->
+            <button class="btn btn-outline-success" id="user-btn">사용자 인증서 생성</button>&nbsp;&nbsp;
+            <a href="/" class="btn btn-outline-secondary">홈으로</a>
+            <br><br>
+            <!-- 결과영역 -->
+            <div class="container" id="user-result"></div>
+
+            <br><br>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    // 버튼 클릭 후 AJAX 동작 ( /admin, POST, {adminid, adminpw} )
+    $("#admin-btn").click(() => {
+        const id = $("#adminid").val();
+        const password = $("#adminpw").val();
+        console.log("admin-btn clicked ", id, password);
+
+        $.post('/admin', { id, password }, (data, status) => {
+            console.log(status, data);
+
+            $("#admin-result").empty();
+            const res = JSON.stringify(data);
+
+            if (data.result == 'success'){
+                $("#admin-result").append("RESULT: "+data.result+'<br>');
+                $("#admin-result").append("MESSAGE: "+data.msg+'<br>');
+            } else {
+                $("#admin-result").append("RESULT: "+data.result+'<br>');
+                $("#admin-result").append("ERROR: "+data.error+'<br>');
+            }
+
+        })
+    })
+    $("#user-btn").click(() => {
+        const id = $("#userid").val();
+        const role = $("#userrole").val();
+        const department = $("#userdepartment").val();
+        console.log("user-btn clicked ", id, role, department);
+
+        $.post('/user', { id, role, department }, (data, status) => {
+            console.log(status, data);
+
+            $("#user-result").empty();
+            const res = JSON.stringify(data);
+            
+            if (data.result == 'success'){
+                $("#user-result").append("RESULT: "+data.result+'<br>');
+                $("#user-result").append("MESSAGE: "+data.msg+'<br>');
+            } else {
+                $("#user-result").append("RESULT: "+data.result+'<br>');
+                $("#user-result").append("ERROR: "+data.error+'<br>');
+            }
+        })
+    })
+</script>
+
+</html>
