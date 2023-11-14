@@ -3,6 +3,7 @@
 # 쉘스크립트 디버깅설정
 set -xe
 
+CUR_DIR=${PWD}
 # 디렉토리 스택구조 활용
 pushd ~/fabric-samples/test-network
 
@@ -16,5 +17,6 @@ pushd ~/fabric-samples/test-network
     # 체인코드 배포 작업 ( 패키지 - 설치 - 승인 - 커밋 )
     ./network.sh deployCC -ccn egg -ccp ~/dev/neardo-project/contract/egg -ccl go -ccv 1.0 -c eggchannel
 
+    cp organizations/peerOrganizations/org1.example.com/connection-org1.json $CUR_DIR/../application/config
 popd
 
