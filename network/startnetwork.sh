@@ -30,5 +30,6 @@ sleep 5
 
 # connection profile 생성
 ./ccp-generate.sh
+cp connection-org2.json ../application/config
 
 

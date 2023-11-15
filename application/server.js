@@ -8,13 +8,13 @@ var fs = require('fs');
 
 // 지갑라이브러리 포함
 const { buildCAClient, enrollAdmin, registerAndEnrollUser } = require('./lib/cautil.js');
-const { buildCCPOrg1, buildWallet } = require('./lib/apputil.js');
+const { buildCCPOrg2, buildWallet } = require('./lib/apputil.js');
 
 // ccp 객체화
-const ccp = buildCCPOrg1();
+const ccp = buildCCPOrg2();
 
 // 서버설정
-const mspOrg1 = 'Org1MSP';
+const mspOrg2 = 'Org2MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const channelName = 'eggchannel';
 const chaincodeName = 'egg';
@@ -56,8 +56,8 @@ app.post('/admin', async(req, res)=>{
 
     try {
         const wallet = await buildWallet(Wallets, walletPath);
-        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-        await enrollAdmin(caClient, wallet, mspOrg1, adminid, adminpw);
+        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+        await enrollAdmin(caClient, wallet, mspOrg2, adminid, adminpw);
 
         var result = {}
         result.result = 'success';
@@ -82,9 +82,9 @@ app.post('/user', async(req, res)=>{
 
     try {
         const wallet = await buildWallet(Wallets, walletPath);
-        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-        //await enrollAdmin(caClient, wallet, mspOrg1, adminid, adminpw);
-        await registerAndEnrollUser(caClient, wallet, mspOrg1, "admin", id, role, department);
+        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+        //await enrollAdmin(caClient, wallet, mspOrg2, adminid, adminpw);
+        await registerAndEnrollUser(caClient, wallet, mspOrg2, "admin", id, role, department);
 
         var result = `{"result":"success","msg":"user certificate is enrolled"}`
         res.json(JSON.parse(result));

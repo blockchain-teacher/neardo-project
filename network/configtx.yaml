@@ -63,7 +63,7 @@ Organizations:
         Rule: "OR('Org2MSP.peer')"
     AnchorPeers:
       - HOST: peer0.org2.example.com
-        PORT: 8051
+        PORT: 9051
 
 # Org3 기관
   - &Org3

@@ -55,16 +55,6 @@ configtxgen -profile ChickenOrgsChannel -outputAnchorPeersUpdate ./config/Chicke
 # org1 의 앵커 설정 : peer channel update
 peer channel update -f ./config/ChickenOrg1MSPAnchor.tx -c ${CHANNEL_NAME} -o localhost:11050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA
 
-# org2 peer 에 연결 환경설정
-setOrg 2
-
-# org2 anchor피어 tx 생성 -> configtxgen
-configtxgen -profile ChickenOrgsChannel -outputAnchorPeersUpdate ./config/ChickenOrg2MSPAnchor.tx -channelID ${CHANNEL_NAME} -asOrg Org2MSP
-
-# org2 의 앵커 설정 : peer channel update
-peer channel update -f ./config/ChickenOrg2MSPAnchor.tx -c ${CHANNEL_NAME} -o localhost:11050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA
-
-sleep 2
 
 CHANNEL_NAME=eggchannel
 
@@ -92,4 +82,23 @@ peer channel join -b ./config/${CHANNEL_NAME}.block
 
 peer channel list
 
+# org2 peer 에 연결 환경설정
+setOrg 2
+
+# org2 anchor피어 tx 생성 -> configtxgen
+configtxgen -profile EggOrgsChannel -outputAnchorPeersUpdate ./config/EggOrg2MSPAnchor.tx -channelID ${CHANNEL_NAME} -asOrg Org2MSP
+
+# org2 의 앵커 설정 : peer channel update
+peer channel update -f ./config/EggOrg2MSPAnchor.tx -c ${CHANNEL_NAME} -o localhost:11050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA
+
+# org3 peer 에 연결 환경설정
+setOrg 3
+
+# org3 anchor피어 tx 생성 -> configtxgen
+configtxgen -profile EggOrgsChannel -outputAnchorPeersUpdate ./config/EggOrg3MSPAnchor.tx -channelID ${CHANNEL_NAME} -asOrg Org3MSP
+
+# org3 의 앵커 설정 : peer channel update
+peer channel update -f ./config/EggOrg3MSPAnchor.tx -c ${CHANNEL_NAME} -o localhost:11050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA
+
+sleep 2
 # connection profile 구성

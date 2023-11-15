@@ -12,11 +12,21 @@ exports.buildCCPOrg1 = () => {
         return null;
     }
     const contents = fs.readFileSync(ccpPath, 'utf8');
-
     const ccp = JSON.parse(contents)
-
     console.log(`Loaded the network configuration located at ${ccpPath}`);
-    
+    return ccp;
+}
+
+exports.buildCCPOrg2 = () => {
+    const ccpPath = path.resolve(__dirname, '..', 'config', 'connection-org2.json');
+    const fileExists = fs.existsSync(ccpPath);
+    if(!fileExists) {
+        throw new Error(`no such file or directory: ${ccpPath}`);
+        return null;
+    }
+    const contents = fs.readFileSync(ccpPath, 'utf8');
+    const ccp = JSON.parse(contents)
+    console.log(`Loaded the network configuration located at ${ccpPath}`);
     return ccp;
 }
 
