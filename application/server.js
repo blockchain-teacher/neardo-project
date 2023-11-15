@@ -26,7 +26,7 @@ app.use(express.urlencoded({extended: true}));
 
 // HTML 라우팅
 app.get('/', (req, res) => {
-    res.sendFile(__dirname+("/views/index.html"));
+    res.sendFile(__dirname+("/views/index_theme.html"));
 })
 app.get('/wallet', (req, res) => {
     res.sendFile(__dirname+("/views/wallet.html"));
@@ -39,8 +39,13 @@ app.get('/eggquery', (req, res) => {
 })
 
 // (TODO) 배송요청 html GET
-
+app.get('/eggrequestship', (req, res) => {
+    res.sendFile(__dirname+"/views/requestship.html");
+})
 // (TODO) 배송 html GET
+app.get('/eggship', (req, res) => {
+    res.sendFile(__dirname+"/views/ship.html");
+})
 
 // REST 라우팅
 app.post('/admin', async(req, res)=>{
@@ -182,11 +187,77 @@ app.post('/egg', async(req,res)=>{
 });
 
 app.post('/egg/shipment', async(req,res)=>{
+    const cert = req.body.cert;
+    const eid = req.body.eid;
+    const shipinfo = req.body.shipinfo;
+
+    console.log("/egg/shipmemt POST : ", cert, eid, shipinfo);
+
+    const wallet = await buildWallet(Wallets, walletPath);
+    const gateway = new Gateway();
+
+    try {
+        await gateway.connect(ccp, {
+            wallet,
+            identity: cert,
+            discovery: { enable: true, asLocalhost: true }
+        });
+        const network = await gateway.getNetwork(channelName);
+        const contract = await network.getContract(chaincodeName);
+        await contract.submitTransaction('RequestShip', eid, shipinfo);
+
+        var doc_json = {};
+        doc_json.result = 'success';
+        doc_json.msg = "tx is submitted";
+        res.send(doc_json);
+
+    } catch (error) {
+        console.log(error.message);
+        var doc_json = {};
+        doc_json.result = 'failed';
+        doc_json.error = error.message;
+        res.send(doc_json);
+        
+    } finally {
+        gateway.disconnect();
+    }
 
 });
 
-app.put('/egg/shipment', async(req,res)=>{
+app.put('/egg/shipment/:eid', async(req,res)=>{
+    const cert = req.body.cert;
+    const eid = req.params.eid;
 
+    console.log("/egg/shipmemt PUT : ", cert, eid);
+
+    const wallet = await buildWallet(Wallets, walletPath);
+    const gateway = new Gateway();
+
+    try {
+        await gateway.connect(ccp, {
+            wallet,
+            identity: cert,
+            discovery: { enable: true, asLocalhost: true }
+        });
+        const network = await gateway.getNetwork(channelName);
+        const contract = await network.getContract(chaincodeName);
+        await contract.submitTransaction('ShipEgg', eid);
+
+        var doc_json = {};
+        doc_json.result = 'success';
+        doc_json.msg = "tx is submitted";
+        res.json(doc_json);
+
+    } catch (error) {
+        console.log(error.message);
+        var doc_json = {};
+        doc_json.result = 'failed';
+        doc_json.error = error.message;
+        res.json(doc_json);
+        
+    } finally {
+        gateway.disconnect();
+    }
 });
 
 // Impl. 3

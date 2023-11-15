@@ -21,8 +21,8 @@
         <div class="container" style="width:80%">
 
             <br>
-            <h1>자산전송 페이지</h1>
-            <p>자산전송을 위한 인증서정보 ID, new owner를 입력하세요.</p>
+            <h1>달걀 배송정보등록</h1>
+            <p>달걀 배송정보등록을 위한 인증서정보 ID를 입력하세요.</p>
             <br>
             <!-- 입력폼 certificate, id, color, size, owner, value -->
             <label for="cert" class="form-label">Certificate Name : </label>
@@ -31,20 +31,14 @@
             <label for="id" class="form-label">ID : </label>
             <input type="text" class="form-control" id="id" style="width:80%">
             <br>
-            <label for="newowner" class="form-label">New Owner : </label>
-            <input type="text" class="form-control" id="newowner" value="" style="width:80%">
-            <br>
-
             <!-- 버튼 -->
-            <button class="btn btn-outline-warning" id="trans-btn">자산전송</button> &nbsp;&nbsp;
+            <button class="btn btn-outline-warning" id="ship-btn">달걀배송정보등록</button> &nbsp;&nbsp;
             <a href="/" class="btn btn-outline-secondary">홈으로</a>
             <br><br>
 
             <!-- 결과영역 -->
             <div class="container" id="result"></div>
         </div>
-
-
         <br><br>
     </div>
 
@@ -52,20 +46,33 @@
 
 <script>
     // 버튼 클릭 후 AJAX 동작 ( /user, POST, {userid, userrole, userdepartment} )
-    $("#trans-btn").click(() => {
+    $("#ship-btn").click(() => {
         const cert = $("#cert").val();
         const id = $("#id").val();
-        const newowner = $("#newowner").val();
 
-        console.log("asset transfer trans-btn clicked ", cert, id, newowner);
+        console.log("ship button clicked ", cert, id);
 
-        $.post('/asset/tx', { cert, id, newowner }, (data, status) => {
-            console.log(status, data);
+        $.ajax({
+            url: '/egg/shipment/'+id,
+            method: 'PUT',
+            dataType: 'text',
+            data: {cert:cert },
+            success: function (data) {
+                console.log(status, data);
 
-            $("#result").empty();
-            const res = JSON.stringify(data);
-            $("#result").append("<p>" + res + "</p>");
+                var ret_data = JSON.parse(data);
+                $("#result").empty();
+                $("#result").append("<p>RESULT : " + ret_data.result + "</p>");
+                if (ret_data.result == 'success') {
+                    $("#result").append("<p>MESSAGE : " + ret_data.msg + "</p>");
+                } else {
+                    $("#result").append("<p>ERROR : " + ret_data.error + "</p>");
+                }
+            }
         })
+        // $.post('/egg/shipment', { cert, id }, (data, status) => {
+
+        // })
     })
 </script>
 

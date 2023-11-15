@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>Neardo Project Prototype</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font: 20px Montserrat, sans-serif;
+            line-height: 1.8;
+            color: #f5f6f7;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        .margin {
+            margin-bottom: 45px;
+        }
+
+        .bg-1 {
+            background-color: #1abc9c;
+            /* Green */
+            color: #ffffff;
+        }
+
+        .bg-2 {
+            background-color: #474e5d;
+            /* Dark Blue */
+            color: #ffffff;
+        }
+
+        .bg-3 {
+            background-color: #ffffff;
+            /* White */
+            color: #555555;
+        }
+
+        .bg-4 {
+            background-color: #2f2f2f;
+            /* Black Gray */
+            color: #fff;
+        }
+
+        .bg-5 {
+            background-color: #005B41;
+            /* Black Gray */
+            color: #fff;
+        }
+
+        .container-fluid {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border: 0;
+            border-radius: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            letter-spacing: 5px;
+        }
+
+        .navbar-nav li a:hover {
+            color: #1abc9c !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">NearDO</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#intro">INTRO</a></li>
+                    <li><a href="#wallet">WALLET</a></li>
+                    <li><a href="#egg">EGG</a></li>
+                    <li><a href="#data">DATA</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- First Container -->
+    <div class="container-fluid bg-1 text-center">
+        <a name="intro"></a>
+        <h3 class="margin" name="intro">NearDO Project</h3>
+        <img src="/public/egg.jpg" class="img-responsive img-circle margin" style="display:inline" alt="Egg" width="350"
+            height="350">
+        <p class="lead">"내알도 프로젝트"는 친환경 달걀 생산과 소비를 위한 <br>닭 분양과 사육 아웃소싱 클라우드 펀딩을 할 수있는 곳입니다. </p>
+    </div>
+
+    <!-- Second Container -->
+    <div class="container-fluid bg-2 text-center">
+        <a name="wallet"></a>
+        <h3 class="margin">Wallet</h3>
+        <div class="row">
+
+            <!-- 관리자 지갑 -->
+            <div class="col-sm-6 ">
+                <p>관리자지갑생성</p>
+                <center>
+                    <label for="adminid" class="form-label">ADMIN ID : </label>
+                    <input type="text" class="form-control " id="adminid" style="width:80%;">
+                    <br>
+                    <label for="adminpw" class="form-label">PASSWORD : </label>
+                    <input type="password" class="form-control" id="adminpw" style="width:80%;">
+                    <br>
+
+                    <!-- 버튼 -->
+                    <button class="btn btn-default btn-lg" id="admin-btn">관리자 인증서 생성</button> &nbsp;&nbsp;
+                    <a href="/" class="btn btn-default btn-lg">홈으로</a>
+                    <br><br>
+                    <!-- 결과영역 -->
+                    <p id="admin-result"></p>
+
+                </center>
+            </div>
+            <!-- 사용자 지갑 -->
+            
+            <div class="col-sm-6">
+                
+                <p >사용자지갑생성</p>
+                <center>
+                    <!-- 입력폼 -->
+                    <label for="userid" class="form-label">User ID : </label>
+                    <input type="text" class="form-control" id="userid" style="width:80%;">
+                    <br>
+                    <label for="userrole" class="form-label">Role : </label>
+                    <input type="text" class="form-control" id="userrole" value="client" style="width:80%;">
+                    <br>
+                    <label for="userdepartment" class="form-label">Department : </label>
+                    <input type="text" class="form-control" id="userdepartment" value="org1.department1"
+                        style="width:80%;">
+                    <br>
+
+                    <!-- 버튼 -->
+                    <button class="btn btn-default btn-lg" id="user-btn">사용자 인증서 생성</button>&nbsp;&nbsp;
+                    <a href="/" class="btn btn-default btn-lg">홈으로</a>
+                    <br><br>
+                    <!-- 결과영역 -->
+                    <p id="user-result"></p>
+
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third Container (Grid) -->
+    <div class="container-fluid bg-3 text-center">
+        <a name="egg"></a>
+        <h3 class="margin">Egg Process</h3><br>
+        <div class="row">
+            <div class="col-sm-4">
+                <p>산란이력등록</p>
+                <center>
+                    <!-- 입력폼 certificate, id, color, size, owner, value -->
+                    <label for="cert1" class="form-label">Certificate Name : </label>
+                    <input type="text" class="form-control" id="cert1" style="width:80%">
+                    <br>
+                    <label for="cid1" class="form-label">Parent Chicken ID : </label>
+                    <input type="text" class="form-control" id="cid1" style="width:80%">
+                    <br>
+                    <label for="eid1" class="form-label">Egg ID : </label>
+                    <input type="text" class="form-control" id="eid1" value="" style="width:80%">
+                    <br>
+                    <label for="sdate1" class="form-label">Spawn date : </label>
+                    <input type="text" class="form-control" id="sdate1" value="" style="width:80%">
+                    <br>
+                    <label for="count1" class="form-label">Count : </label>
+                    <input type="text" class="form-control" id="count1" value="" style="width:80%">
+                    <br>
+                    <label for="owner1" class="form-label">Owner : </label>
+                    <input type="text" class="form-control" id="owner1" value="" style="width:80%">
+                    <br>
+
+                    <!-- 버튼 -->
+                    <button class="btn btn-default btn-lg" id="gen-btn">산란정보생성</button>&nbsp;&nbsp;
+                    <a href="/" class="btn btn-default btn-lg">홈으로</a>
+                    <br><br>
+                    <!-- 결과영역 -->
+                    <p id="result1"></p>
+                </center>
+                <!-- <img src="birds1.jpg" class="img-responsive margin" style="width:100%" alt="Image"> -->
+            </div>
+            <div class="col-sm-4">
+                <p>배송요청</p>
+                <center>
+                    <!-- 입력폼 certificate, id, color, size, owner, value -->
+                    <label for="cert2" class="form-label">Certificate Name : </label>
+                    <input type="text" class="form-control" id="cert2" style="width:80%">
+                    <br>
+                    <label for="id2" class="form-label">ID : </label>
+                    <input type="text" class="form-control" id="id2" style="width:80%">
+                    <br>
+                    <label for="shipinfo2" class="form-label">Shipment information : </label>
+                    <input type="text" class="form-control" id="shipinfo2" value="" style="width:80%">
+                    <br>
+
+                    <!-- 버튼 -->
+                    <button class="btn btn-default btn-lg" id="req-btn">달걀배송신청</button> &nbsp;&nbsp;
+                    <a href="/" class="btn btn-default btn-lg">홈으로</a>
+                    <br><br>
+
+                    <!-- 결과영역 -->
+                    <p id="result2"></p>
+                </center>
+                <!-- <img src="birds2.jpg" class="img-responsive margin" style="width:100%" alt="Image"> -->
+            </div>
+            <div class="col-sm-4">
+                <p>배송정보등록</p>
+                <center>
+                    <!-- 입력폼 certificate, id, color, size, owner, value -->
+                    <label for="cert3" class="form-label">Certificate Name : </label>
+                    <input type="text" class="form-control" id="cert3" style="width:80%">
+                    <br>
+                    <label for="id3" class="form-label">ID : </label>
+                    <input type="text" class="form-control" id="id3" style="width:80%">
+                    <br>
+                    <!-- 버튼 -->
+                    <button class="btn btn-default btn-lg" id="ship-btn">달걀배송정보등록</button> &nbsp;&nbsp;
+                    <a href="/" class="btn btn-default btn-lg">홈으로</a>
+                    <br><br>
+
+                    <!-- 결과영역 -->
+                    <p id="result3"></p>
+                </center>
+                <!-- <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image"> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Fourth Container (Grid) -->
+    <div class="container-fluid bg-5 text-center">
+        <a name="data"></a>
+        <h3 class="margin">Egg Information</h3><br>
+        <div class="row">
+            <div class="col-sm-12">
+                <p>산란정보조회</p>
+                <center>
+                    <!-- 입력폼 -->
+                    <label for="cert4" class="form-label">Certificate Name : </label>
+                    <input type="text" class="form-control" id="cert4" style="width:80%">
+                    <br>
+                    <label for="eid4" class="form-label">Egg ID : </label>
+                    <input type="text" class="form-control" id="eid4" style="width:80%">
+                    <br>
+
+                    <!-- 버튼 -->
+                    <button class="btn btn-default btn-lg" id="read-btn">산란정보조회</button>&nbsp;&nbsp;
+                    <!-- <a href="#" class="btn btn-outline-success">자산이력조회</a>&nbsp;&nbsp; -->
+                    <button class="btn btn-default btn-lg" id="hist-btn">산란정보이력조회</button>&nbsp;&nbsp;
+                    <a href="/" class="btn btn-default btn-lg">홈으로</a>
+                    <br><br>
+
+                    <!-- 결과영역 -->
+
+                    <!-- id, color, size, owner, value -->
+                    <p id="result4"></p><br>
+                    <table id="result_table" class="table table-hover" style="width:80%">
+                        <thead id="result_table_head">
+                        </thead>
+                        <tbody id="result_table_body">
+                        </tbody>
+                    </table>
+
+                </center>
+                <!-- <img src="birds2.jpg" class="img-responsive margin" style="width:100%" alt="Image"> -->
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="container-fluid bg-4 text-center">
+        <p>NearDO Prototype Made By <a href="https://github.com/blockchain-teacher">blockchain-teacher</a></p>
+    </footer>
+
+</body>
+
+<script>
+    //admin wallet
+    $("#admin-btn").click(() => {
+        const id = $("#adminid").val();
+        const password = $("#adminpw").val();
+        console.log("admin-btn clicked ", id, password);
+
+        $.post('/admin', { id, password }, (data, status) => {
+            console.log(status, data);
+
+            $("#admin-result").empty();
+            const res = JSON.stringify(data);
+
+            if (data.result == 'success') {
+                $("#admin-result").append("RESULT: " + data.result + '<br>');
+                $("#admin-result").append("MESSAGE: " + data.msg + '<br>');
+            } else {
+                $("#admin-result").append("RESULT: " + data.result + '<br>');
+                $("#admin-result").append("ERROR: " + data.error + '<br>');
+            }
+
+        })
+    })
+    //user wallet
+    $("#user-btn").click(() => {
+        const id = $("#userid").val();
+        const role = $("#userrole").val();
+        const department = $("#userdepartment").val();
+        console.log("user-btn clicked ", id, role, department);
+
+        $.post('/user', { id, role, department }, (data, status) => {
+            console.log(status, data);
+
+            $("#user-result").empty();
+            const res = JSON.stringify(data);
+
+            if (data.result == 'success') {
+                $("#user-result").append("RESULT: " + data.result + '<br>');
+                $("#user-result").append("MESSAGE: " + data.msg + '<br>');
+            } else {
+                $("#user-result").append("RESULT: " + data.result + '<br>');
+                $("#user-result").append("ERROR: " + data.error + '<br>');
+            }
+        })
+    })
+    //egg register
+    $("#gen-btn").click(() => {
+        const cert = $("#cert1").val();
+        const cid = $("#cid1").val();
+        const eid = $("#eid1").val();
+        const sdate = $("#sdate1").val();
+        const owner = $("#owner1").val();
+        const count = $("#count1").val();
+
+        console.log("egg create gen-btn clicked ", cert, cid, eid, sdate, owner, count);
+
+        $.post('/egg', { cert, cid, eid, sdate, owner, count }, (data, status) => {
+            console.log(status, data);
+
+            $("#result1").empty();
+            const res = JSON.stringify(data);
+            if (data.result == 'success') {
+                $("#result1").append("RESULT : " + data.result + "<br>");
+                $("#result1").append("MESSAGE : " + data.msg + "<br>");
+            } else {
+                $("#result1").append("RESULT : " + data.result + "<br>");
+                $("#result1").append("ERROR : " + JSON.stringify(data.error) + "<br>");
+            }
+        })
+    })
+    //egg ship request
+    $("#req-btn").click(() => {
+        const cert = $("#cert2").val();
+        const eid = $("#id2").val();
+        const shipinfo = $("#shipinfo2").val();
+
+        console.log("request button clicked ", cert, eid, shipinfo);
+
+        $.post('/egg/shipment', { cert, eid, shipinfo }, (data, status) => {
+            console.log(status, data);
+
+            $("#result2").empty();
+            $("#result2").append("<p>RESULT : " + data.result + "</p>");
+            if (data.result == 'success') {
+                $("#result2").append("<p>MESSAGE : " + data.msg + "</p>");
+            } else {
+                $("#result2").append("<p>ERROR : " + data.error + "</p>");
+            }
+        })
+    })
+    //egg ship
+    $("#ship-btn").click(() => {
+        const cert = $("#cert3").val();
+        const id = $("#id3").val();
+
+        console.log("ship button clicked ", cert, id);
+
+        $.ajax({
+            url: '/egg/shipment/' + id,
+            method: 'PUT',
+            dataType: 'text',
+            data: { cert: cert },
+            success: function (data) {
+                console.log(status, data);
+
+                var ret_data = JSON.parse(data);
+                $("#result3").empty();
+                $("#result3").append("<p>RESULT : " + ret_data.result + "</p>");
+                if (ret_data.result == 'success') {
+                    $("#result3").append("<p>MESSAGE : " + ret_data.msg + "</p>");
+                } else {
+                    $("#result3").append("<p>ERROR : " + ret_data.error + "</p>");
+                }
+            }
+        })
+        // $.post('/egg/shipment', { cert, id }, (data, status) => {
+
+        // })
+    })
+    //egg read
+    $("#read-btn").click(() => {
+        const eid = $("#eid4").val();
+        const cert = $("#cert4").val();
+        console.log("egg read read-btn clicked ", cert, eid);
+
+        $.get('/egg', { cert, eid }, (data, status) => {
+            console.log(status, data);
+
+            $("#result4").empty();
+            const res = JSON.stringify(data);
+            //$("#result").append(res);
+            // table 채우기
+            if (data.result == 'success') {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+
+                $("#result_table_head").append("<tr ><th>Key</th><th>Record</th></tr>");
+                $("#result_table_body").append("<tr><td>ChickenID:</td><td>" + data.msg.cid + "</td></tr>");
+                $("#result_table_body").append("<tr><td>EggID:</td><td>" + data.msg.eid + "</td></tr>");
+                $("#result_table_body").append("<tr><td>SpawnDate:</td><td>" + data.msg.spawndate + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Count:</td><td>" + data.msg.count + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Shipment Infomation:</td><td>" + data.msg.shipinfo + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Owner:</td><td>" + data.msg.owner + "</td></tr>");
+                $("#result_table_body").append("<tr><td>Status:</td><td>" + data.msg.status + "</td></tr>");
+            } else {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+                $("#result4").append("RESULT: failed<br>");
+                $("#result4").append("ERROR: " + JSON.stringify(data.error) + "<br>");
+
+            }
+        })
+    })
+    //egg history
+    $("#hist-btn").click(() => {
+        const eid = $("#eid4").val();
+        const cert = $("#cert4").val();
+        console.log("egg history hist-btn clicked ", cert, eid);
+
+        $.get('/egg/history', { cert, eid }, (data, status) => {
+            console.log(status, data);
+
+            $("#result4").empty();
+            const res = JSON.stringify(data);
+            //$("#result").append(res);
+            //테이블 채우기
+            if (data.result == 'success') {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+
+
+                $("#result_table_head").append("<tr ><th>tag</th><th>Data</th></tr>");
+
+                for (i = 0; i < data.msg.length; i++) {
+                    $("#result_table_body").append("<tr><td>TxID:</td><td>" + data.msg[i].txId + "</td></tr>");
+                    $("#result_table_body").append("<tr><td>Timestamp:</td><td>" + data.msg[i].timestamp + "</td></tr>");
+                    $("#result_table_body").append("<tr><td>isDelete:</td><td>" + data.msg[i].isDelete + "</td></tr>");
+
+                    var record = "ChickenID: " + data.msg[i].record.cid + "<br>" + "EggID: " + data.msg[i].record.eid + "<br>" + "SpawnDate: " + data.msg[i].record.spawndate + "<br>" + "Count: " + data.msg[i].record.count + "<br>" + "Shipment Infomation: " + data.msg[i].record.shipinfo + "<br>" + "Owner: " + data.msg[i].record.owner + "<br>" + "Status: " + data.msg[i].record.status + "<br>"
+
+                    $("#result_table_body").append("<tr><td>Record:</td><td>" + record + "</td></tr>");
+                }
+            } else {
+                $("#result_table_head").empty();
+                $("#result_table_body").empty();
+                $("#result4").append("RESULT: failed<br>");
+                $("#result4").append("ERROR: " + JSON.stringify(data.error) + "<br>");
+
+            }
+        })
+    })
+</script>
+
+</html>

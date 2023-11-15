@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearDO Prototype</title>
+    <!-- 부트스트랩 라이브러리 추가 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- jquery 라이브러리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="container" style="width:80%">
+
+            <br>
+            <h1>달걀 배송신청</h1>
+            <p>달걀 배송신청을 위한 인증서정보 ID, 배송정보를 입력하세요.</p>
+            <br>
+            <!-- 입력폼 certificate, id, color, size, owner, value -->
+            <label for="cert" class="form-label">Certificate Name : </label>
+            <input type="text" class="form-control" id="cert" style="width:80%">
+            <br>
+            <label for="id" class="form-label">ID : </label>
+            <input type="text" class="form-control" id="id" style="width:80%">
+            <br>
+            <label for="shipinfo" class="form-label">Shipment information : </label>
+            <input type="text" class="form-control" id="shipinfo" value="" style="width:80%">
+            <br>
+
+            <!-- 버튼 -->
+            <button class="btn btn-outline-warning" id="req-btn">달걀배송신청</button> &nbsp;&nbsp;
+            <a href="/" class="btn btn-outline-secondary">홈으로</a>
+            <br><br>
+
+            <!-- 결과영역 -->
+            <div class="container" id="result"></div>
+        </div>
+        <br><br>
+    </div>
+
+</body>
+
+<script>
+    // 버튼 클릭 후 AJAX 동작 ( /user, POST, {userid, userrole, userdepartment} )
+    $("#req-btn").click(() => {
+        const cert = $("#cert").val();
+        const eid = $("#id").val();
+        const shipinfo = $("#shipinfo").val();
+
+        console.log("request button clicked ", cert, eid, shipinfo);
+
+        $.post('/egg/shipment', { cert, eid, shipinfo }, (data, status) => {
+            console.log(status, data);
+
+            $("#result").empty();
+            $("#result").append("<p>RESULT : " +data.result + "</p>");
+            if(data.result == 'success') {
+                $("#result").append("<p>MESSAGE : " +data.msg + "</p>");
+            } else {
+                $("#result").append("<p>ERROR : " +data.error + "</p>");
+            }
+        })
+    })
+</script>
+
+</html>
