@@ -19,6 +19,9 @@ docker volume prune
 # 네트워크 시작 (3가지 버전 중 network ) 기관 3개 채널2개 - chickenchannel, eggchannel 
 ```
 cd network
+mkdir config organizations
+mkdir organizations/fabric-ca
+mkdir organizations/fabric-ca/org1 organizations/fabric-ca/org2 organizations/fabric-ca/org3 organizations/fabric-ca/ordererOrg
 bash startnetwork.sh
 ```
 # 체널 구성
