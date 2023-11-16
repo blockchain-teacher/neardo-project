@@ -14,3 +14,6 @@ sudo rm -rf ./organizations/fabric-ca/org1/*
 sudo rm -rf ./organizations/fabric-ca/org2/*
 sudo rm -rf ./organizations/fabric-ca/org3/*
 sudo rm -rf ./organizations/fabric-ca/ordererOrg/*
+
+rm -rf ../application/config/*
+rm -rf ../application/wallet/*
